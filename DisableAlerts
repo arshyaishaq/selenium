@@ -11,6 +11,16 @@ public class DisableAlert {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("http://facebook.com");
-        System.out.println(driver.getTitle());
-        driver.quit();
-    }
+        
+         // Inject JavaScript to disable alerts
+                ((JavascriptExecutor) driver).executeScript(
+                    "window.alert = function(){};" +
+                    "window.confirm = function(){ return true; };" +
+                    "window.prompt = function(){ return ''; };"
+                );
+        
+                System.out.println("Alerts disabled");
+                System.out.println("Title: " + driver.getTitle());
+                driver.quit();
+            }
+}
